@@ -9,17 +9,17 @@ import 'get_prediction.dart';
 
 Future<GetPrediction> askPrediction() async {
   final response = await http.post(
-    Uri.parse('https://water-quality-fast-api.herokuapp.com/predict/'),
+    Uri.parse('https://water-quality-fast-api.herokuapp.com/predict'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, double>{
-      "ph": 0,
-      "Hardness": 0,
-      "Solids": 0,
-      "Chloramines": 0,
-      "Sulfate": 0,
-      "Conductivity": 0,
+      "ph": 1000,
+      "Hardness": 1000,
+      "Solids": 10000,
+      "Chloramines": 1000,
+      "Sulfate": 1000,
+      "Conductivity": 10000,
       "Organic_carbon": 0,
       "Trihalomethanes": 0,
       "Turbidity": 0
@@ -64,9 +64,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String predicted = "no_call";
-  void _incrementCounter() {
-    setState(() async {
-      final GetPrediction pred = await askPrediction();
+  Future<void> _incrementCounter() async {
+    final GetPrediction pred = await askPrediction();
+    setState(() {
       predicted = pred.result;
     });
   }
